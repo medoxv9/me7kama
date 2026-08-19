@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المحكمة | لعبة الأدوار</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand"><div class="seal">ع</div><div>المحكمة<small>لعبة الأدوار والحُجج</small></div></div>
+      http://localhost:3000      <div class="round">جلسة online · 3 لاعبين</div>
+    </header>
+
+    <main id="startScreen" class="screen">
+      <section class="hero">
+        <div><div class="eyebrow">القضية مفتوحة</div><h1>الكلمة<br>للمحكمة.</h1><p class="intro">صايب جلسة، صيفط الرابط لصحابك، وخلي أقوى قصة هي اللي تربح.</p><button class="btn btn-primary" id="startButton">صايب جلسة ←</button></div>
+        <div class="court-illustration" aria-label="رسم لمحكمة"><div class="arch"></div><div class="column left"></div><div class="column right"></div><div class="figure"></div><div class="judge-desk"></div><div class="caption">العدل كيسمع للجميع</div></div>
+      </section>
+    </main>
+
+    <main id="lobbyScreen" class="screen hidden">
+      <div class="eyebrow">جلسة خاصة</div><h2>صيفط الرابط لصحابك</h2><p class="intro">دخل حتى 3 لاعبين لنفس الرابط. ملي يختارو كاملين الأدوار، الجلسة غادي تبدا بوحدها.</p>
+      <div class="room-share"><input id="roomLink" readonly><button class="btn btn-primary" id="copyRoom">نسخ الرابط</button></div>
+      <p class="room-info" id="roomInfo"></p><div class="lobby-players" id="lobbyPlayers"></div>
+      <button class="btn btn-primary" id="chooseRoleButton">اختار الدور ديالي ←</button>
+    </main>
+
+    <main id="roleScreen" class="screen hidden">
+      <div class="eyebrow">الخطوة الأولى</div><h2>شكون غادي تكون فالمحكمة؟</h2><p class="intro">كتب سميتك واختار الدور ديالك. كل لاعب خاصو ياخذ دور مختلف.</p>
+      <label class="name-field" for="playerName">كتب سميتك</label><input id="playerName" class="name-input" type="text" maxlength="20" placeholder="مثال: أمين" autocomplete="name"><p id="nameError" class="name-error" aria-live="polite"></p>
+      <div class="role-grid"><div class="role active" data-role="القاضي"><div class="role-icon">⚖</div><strong>القاضي</strong><span>كيسمع للحجج وكيصدر الحكم</span></div><div class="role" data-role="المحامي"><div class="role-icon">§</div><strong>المحامي</strong><span>كيدافع على موكله بالحجج</span></div><div class="role" data-role="المتهم"><div class="role-icon">◈</div><strong>المتهم</strong><span>كيحكي القصة وكيقلب الاتهام</span></div></div>
+      <button class="btn btn-primary" id="joinButton">أكد الدور ديالي ←</button>
+    </main>
+
+    <main id="gameScreen" class="screen hidden">
+      <div class="game-head"><div><div class="eyebrow">الجلسة رقم <span id="sessionNumber">03</span> · القضية مفتوحة · الدور ديالك: <span id="chosenRole">القاضي</span></div><h2 id="caseTitle">سرّ اللوحة المفقودة</h2></div><div class="timer" id="timer">01:30</div></div>
+      <section class="case"><h3 id="caseDescription">المتهم متابع بسرقة لوحة فنية من المتحف الوطني</h3><p id="caseClue">الدليل الوحيد هو تسجيل كاميرا مقطوع لمدة سبع دقائق.</p></section>
+      <div class="players"><article class="player turn" data-player="القاضي"><span class="status">دابا كيهضر</span><h3>كيتسنى</h3><p>كيقرر فالنهاية</p><div class="action-row"><button class="action" data-message="القاضي طلب دليل جديد.">طلب دليل</button><button class="action" data-message="القاضي عطى الكلمة للمحامي.">عطي الكلمة</button></div></article><article class="player" data-player="المحامي"><span class="status">كيتسنى</span><h3>كيتسنى</h3><p>كيقلب على ثغرة فالقضية</p><div class="action-row"><button class="action" data-message="المحامي قدم حجة جديدة.">قدم حجة</button><button class="action" data-message="المحامي استجوب الشاهد.">استجوب الشاهد</button></div></article><article class="player" data-player="المتهم"><span class="status">كيتسنى</span><h3>كيتسنى</h3><p>كيدافع على راسو</p><div class="action-row"><button class="action" data-message="المتهم حكى رواية جديدة.">حكي الرواية</button><button class="action" data-message="المتهم طلب مواجهة الدليل.">واجه الدليل</button></div></article></div>
+      <div class="log" id="log">الجلسة غادي تبدا ملي يكملو 3 لاعبين.</div><section class="talk-box"><label id="talkLabel" for="talkInput">الكلمة ديال القاضي</label><div class="talk-row"><input id="talkInput" type="text" maxlength="180" placeholder="كتب كلامك هنا..."><button class="btn btn-primary" id="talkButton">هضر</button></div></section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
