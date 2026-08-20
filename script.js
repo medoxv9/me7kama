@@ -26,10 +26,20 @@ function show(screen) {
 }
 
 async function createRoom() {
-  const response = await fetch('/api/rooms', { method: 'POST' });
-  const data = await response.json();
-  history.replaceState({}, '', `/${data.roomCode}`);
-  connect(data.roomCode);
+  const button = document.querySelector('#startButton');
+  button.disabled = true;
+  button.textContent = 'كنوجدو الجلسة...';
+  try {
+    const response = await fetch('/api/rooms', { method: 'POST' });
+    const data = await response.json();
+    if (!response.ok || !data.roomCode) throw new Error(data.message || 'تعذر إنشاء الجلسة.');
+    history.replaceState({}, '', `/${data.roomCode}`);
+    connect(data.roomCode);
+  } catch (error) {
+    roomInfo.textContent = error.message || 'وقع مشكل فالاتصال بالسيرفر.';
+    button.disabled = false;
+    button.textContent = 'عاود المحاولة ←';
+  }
 }
 
 function connect(roomCode) {
@@ -37,6 +47,7 @@ function connect(roomCode) {
   socket = new WebSocket(`${protocol}://${location.host}/?room=${roomCode}`);
   socket.addEventListener('open', () => { roomInfo.textContent = `كود الجلسة: ${roomCode}`; roomLink.value = `${location.origin}/${roomCode}`; show(lobbyScreen); });
   socket.addEventListener('message', (event) => handleMessage(JSON.parse(event.data)));
+  socket.addEventListener('error', () => { roomInfo.textContent = 'ما قدرناش نتاصلو بالسيرفر. عاود فتح الرابط.'; });
   socket.addEventListener('close', () => { if (!currentState || currentState.phase !== 'verdict') log.textContent = 'تقطع الاتصال بالسيرفر.'; });
 }
 
