@@ -24,7 +24,7 @@ export default {
       await room.fetch(new Request(`https://room/create?code=${roomCode}`, { method: 'POST' }));
       return json({ roomCode }, 201);
     }
-    if (request.headers.get('Upgrade') === 'websocket') {
+    if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
       const roomCode = url.searchParams.get('room')?.toUpperCase();
       if (!roomCode) return json({ message: 'Room code missing' }, 400);
       const id = env.ROOMS.idFromName(roomCode);
