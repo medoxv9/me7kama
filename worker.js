@@ -28,7 +28,7 @@ export default {
       const roomCode = url.searchParams.get('room')?.toUpperCase();
       if (!roomCode) return json({ message: 'Room code missing' }, 400);
       const id = env.ROOMS.idFromName(roomCode);
-      return env.ROOMS.get(id).fetch(new Request(`https://room/connect?code=${roomCode}`, request));
+      return env.ROOMS.get(id).fetch(request);
     }
     return env.ASSETS.fetch(request);
   }
